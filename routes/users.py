@@ -27,23 +27,13 @@ def admin_put_user_infos(request: RequestPutUser):
     return response
 
 
-@router.put("/update-password")
-def update_password(request:RequestNewPassword):
-
-
-    response = service_update_password_user(request.authorization, request.new_password)
-
-
-    return response 
-
-
 @router.post("/auth")
 def search_user(user:UserRequestLogin): 
     response_login = verify_password(user.email,user.password) 
 
     return response_login
 
-@router.post("/user/delete")
+@router.delete("/")
 def delete_user(user:UserDeleteRequest):
 
     response = service_delete_user(user.user_id, user.authorization)
@@ -51,7 +41,7 @@ def delete_user(user:UserDeleteRequest):
     return response 
 
 # Qualquer pessoa criar novo usuário
-@router.post("/create-user")
+@router.post("/")
 def create(user:UserCreateRequest):
 
     response = service_create_user(user.email, user.password, user.name, user.phone )

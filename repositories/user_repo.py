@@ -44,11 +44,11 @@ def post_new_user(uuid:str, name:str, email:str, password_hash:str, created_at:s
     cursor.execute(
     '''
     INSERT INTO users 
-        (id, name, email, password_hash, created_at, role, status, phone)
+        (id, name, email, password_hash, created_at, role, phone)
     VALUES 
-        (%s, %s, %s, %s, %s, %s, %s, %s)
+        (%s, %s, %s, %s, %s, %s, %s)
     ''',
-    (uuid, name, email, password_hash, created_at, "user", "offline", phone)
+    (uuid, name, email, password_hash, created_at, "user", phone)
     )
 
     conn.commit()

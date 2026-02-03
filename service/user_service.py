@@ -1,4 +1,4 @@
-from os import access, confstr
+from os import access, confstr, stat
 from fastapi.responses import JSONResponse
 from repositories.user_repo import del_user, get_all_users,get_user_by_email, post_new_user, get_user_by_id, put_user    
 from utils import access_token
@@ -11,8 +11,10 @@ from datetime import datetime
 
 
 def verify_password(email:str, password:str):
-    user =  get_user_by_email(email)
     
+    user =  get_user_by_email(email)
+    print(user)
+
     if not user:
 
         return JSONResponse(
@@ -91,10 +93,8 @@ def service_create_user(email:str, password:str, name:str, phone:str):
 
     post_new_user(str(new_uuid), name,email, hashed_password, formato_iso, phone)
    
-    service_post_a_user_online("new_user", "user")
-    service_add_new_estatistic_on_analitycs({"estatistic":"new_user", "data":""})
 
-    return "user criado"
+    return JSONResponse(status_code=201, content="usuário criado") 
 
 
 
