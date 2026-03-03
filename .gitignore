@@ -1,0 +1,3 @@
+.env
+*.env
+bible_ai_backend/.env
