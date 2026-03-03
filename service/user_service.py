@@ -28,7 +28,7 @@ def verify_password(email:str, password:str):
         token = create_access_token(user["id"],user["name"],user["role"])
 
         return JSONResponse(
-                status_code=201,
+                status_code=200,
                 content={"username":user["name"],"role":user["role"],"user_id": user["id"], "phone":user["phone"], "access_token":token, }
                 )
     else:

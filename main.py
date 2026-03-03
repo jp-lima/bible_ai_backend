@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routes.users import router as users_router
 from routes.webhook import router as webhook_yampi
 from routes.analitycs import router as analitycs_router
+from routes.subscription import router as subscription_router
 
 app = FastAPI()
 app.add_middleware(
@@ -20,6 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(subscription_router)
 app.include_router(users_router)
 app.include_router(analitycs_router)
 app.include_router(webhook_yampi)
