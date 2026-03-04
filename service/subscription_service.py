@@ -21,12 +21,11 @@ def service_create_subscription(user_id, plan_id, user_cpf, billing_type, user_n
     new_uuid = uuid.uuid4()
 
     plan = get_plan_by_id(plan_id)
-    print(plan)
-    print(plan[0]["name"])
-    plan_price_table = {
-            "monthly":plan[0]["price_monthly"],
-            "quartely":plan[0]["price_quartely"],
-            "semiannualy":plan[0]["price_semiannual"]
+    plan_table = {
+            "monthly":{"value":plan[0]["price_monthly"], "days_quantity":30},
+            "quartely":{"value":plan[0]["price_quartely"], "days_quantity":90},
+            "semiannualy":{"value":plan[0]["price_semiannual"], "days_quantity":180}
+                           
         }
 
 
@@ -36,17 +35,15 @@ def service_create_subscription(user_id, plan_id, user_cpf, billing_type, user_n
     put_asaas_user_id(user_id, data_new_client["id"] )
     
 
-    next_payment = now + timedelta(days=30)
+    next_payment = now + timedelta(days=plan_table[cycle]["days_quantity"])
 
 
     print(next_payment.strftime("%Y-%m-%d"))
 
-    print(plan_price_table[cycle])
- #   create_row_subscription(str(new_uuid),user_id,plan_id,"waiting_payment" ,next_payment, "", now   )
     payload = {
         "customer":data_new_client["id"],    
         "billingType":billing_type,
-        "value":plan_price_table[cycle],
+        "value":plan_table[cycle]["value"],
         "nextDueDate":next_payment.strftime("%Y-%m-%d"),
         "cycle":cycle.upper(), #<- O asass só aceita o "cycle" em letra maiusculas
     }
@@ -58,10 +55,11 @@ def service_create_subscription(user_id, plan_id, user_cpf, billing_type, user_n
     response = requests.post(asaas_api, json=payload, headers=headers)
 
     print(response.text)
+    data = response.json()
+    print(data["id"])
     
-    # Colocar id do pagamento response["id"] na coluna payment_provider_id da tabela subscriptions
-    # colocar os creditos na carteira do cliente
-    # Atualizar o subscription de "waiting_payment" para "paid"
+    create_row_subscription(str(new_uuid),user_id,plan_id,"waiting_payment" ,next_payment, data["id"], now   )
+
 
 
 
