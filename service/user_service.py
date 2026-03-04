@@ -7,6 +7,7 @@ from utils.access_token import create_access_token, decode_access_token
 from service.analitycs_service import service_add_new_estatistic_on_analitycs, service_post_a_user_online 
 import uuid
 from datetime import datetime
+from service.wallet_service import service_create_new_wallet
 
 
 
@@ -83,7 +84,6 @@ def service_get_all_users(authorization:str):
         return "não autorizado"
 
 def service_create_user(email:str, password:str, name:str, phone:str):
-    
     hashed_password = create_hash(password)
     new_uuid = uuid.uuid4()
 
@@ -92,7 +92,8 @@ def service_create_user(email:str, password:str, name:str, phone:str):
     formato_iso = now.strftime("%Y-%m-%d %H:%M:%S.%f")
 
     post_new_user(str(new_uuid), name,email, hashed_password, formato_iso, phone)
-   
+    service_create_new_wallet(str(new_uuid))
+                    
 
     return JSONResponse(status_code=201, content="usuário criado") 
 
