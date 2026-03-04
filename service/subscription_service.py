@@ -14,7 +14,6 @@ asaas_acess_token = os.getenv("API_KEY_ASAAS")
 
 asaas_api = "https://api-sandbox.asaas.com/v3/subscriptions"
 
-
 def service_create_subscription(user_id, plan_id, user_cpf, billing_type, user_name, cycle):
     now = datetime.now(ZoneInfo("America/Sao_Paulo"))
     new_uuid = uuid.uuid4()

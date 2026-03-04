@@ -4,14 +4,12 @@ from fastapi import APIRouter,Form,File, UploadFile,Response, HTTPException
  
 router = APIRouter(
 prefix="/webhook",
-tags=["webhook-yampi"]
+tags=["webhooks"]
         )
    
-@router.post("/mercadopago")
+@router.post("/asaas")
 def webhook(data: dict):
-   
-
-
+    print(data)
     return  
 
 
