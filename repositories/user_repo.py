@@ -13,6 +13,25 @@ def get_user_by_id(uuid:str):
 
     return users
 
+def put_asaas_user_id(uuid:str, saas_id:str):
+    conn = get_conn()
+
+    cursor = conn.cursor(dictionary = True)
+
+    cursor.execute( '''
+        UPDATE users SET
+            asaas_customer_id = %s     
+    WHERE id = %s 
+     ''',
+    (saas_id, uuid)
+ )
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+
 
 def get_all_users():
     conn = get_conn()
