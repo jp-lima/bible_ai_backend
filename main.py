@@ -12,6 +12,8 @@ from routes.webhook import router as webhook_yampi
 from routes.analitycs import router as analitycs_router
 from routes.subscription import router as subscription_router
 
+from routes.chat import router as chat_router
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -20,7 +22,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+app.include_router(chat_router)
 app.include_router(subscription_router)
 app.include_router(users_router)
 app.include_router(analitycs_router)
