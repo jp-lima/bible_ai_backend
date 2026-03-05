@@ -21,3 +21,27 @@ def create_row_subscription(uuid:str, user_id:str, plan_id:str,status:str ,next_
     conn.close()
 
 
+def put_subscription_by_payment_id(payment_provider_id, status):
+    conn = get_conn()
+
+    cursor = conn.cursor(dictionary = True)
+
+    cursor.execute( '''
+        UPDATE subscriptions SET
+            status = %s     
+
+    WHERE payment_provider_id = %s 
+     ''',
+    (status, payment_provider_id)
+ )
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+
+
+
+
+
