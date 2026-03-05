@@ -20,4 +20,33 @@ def create_new_wallet(uuid:str, user_id:str, balance:int, cycle_started_at:str, 
     cursor.close()
     conn.close()
 
+def put_value_in_wallet_by_user_id(new_value:int, id:str):        
+
+    conn = get_conn()
+    cursor = conn.cursor(dictionary=True)
+
+
+    cursor.execute('''
+   UPDATE credit_wallet SET     
+        balance = %s
+
+    WHERE user_id = %s
+    ''',
+    (new_value, id)
+
+
+    )
+
+
+    conn.commit()
+     
+    cursor.close()
+    conn.close()
+
+
+
+
+
+
+
 

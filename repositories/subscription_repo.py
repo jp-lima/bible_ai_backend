@@ -40,6 +40,24 @@ def put_subscription_by_payment_id(payment_provider_id, status):
     cursor.close()
     conn.close()
 
+def get_subscription_by_payment_id(payment_provider_id:str):
+    conn = get_conn()
+
+    cursor = conn.cursor(dictionary = True)
+
+    cursor.execute( '''
+       SELECT * FROM subscriptions WHERE payment_provider_id = %s ''',
+    (payment_provider_id, )
+ )
+    subscriptions = cursor.fetchone()
+
+
+    cursor.close()
+    conn.close()
+
+    return subscriptions
+
+
 
 
 
