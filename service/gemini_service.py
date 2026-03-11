@@ -5,6 +5,8 @@ from time import sleep
 
 load_dotenv()
 
+
+
 CHAVE_API_GOOGLE = os.getenv("GEMINI_API_KEY").strip()
 MODELO_ESCOLHIDO = "gemini-2.5-flash-lite"
 BASE_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODELO_ESCOLHIDO}:generateContent?key={CHAVE_API_GOOGLE}"
