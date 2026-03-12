@@ -7,6 +7,7 @@ class Request_send_message(BaseModel):
     religion:str  
     need:str 
     mood:str 
+    historic:list 
 
     
 

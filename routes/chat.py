@@ -20,7 +20,7 @@ async def teste():
 @router.post("/chat-api")
 async def chat(request: Request_send_message):
 
-    response = chatbot_message_service(request.user_id, request.prompt, request.religion, request.mood, request.need  )  
+    response = chatbot_message_service(request.user_id, request.prompt, request.religion, request.mood, request.need, request.historic )  
 
     return response  
 

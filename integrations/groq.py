@@ -1,16 +1,14 @@
 from dotenv import load_dotenv
 import os
 from groq import Groq
-
 load_dotenv() 
 
-API_KEY = os.getenv("GROQ_API_KEY ")
+API_KEY = os.getenv("GROQ_API_KEY")
 
-def integration_groq(prompt,religion, need, mood):
-    client = Groq(api_key=API_KEY)
-    completion = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=[
+def integration_groq(prompt,religion, need, mood, historic):
+
+
+    lista = [
              {
         "role": "system",
         "content": f'''Você é um assistente espiritual.
@@ -24,14 +22,21 @@ def integration_groq(prompt,religion, need, mood):
     1. Responda respeitando a afiliação religiosa.
     2. Ajude conforme a necessidade.
     3. Adapte o tom ao humor do usuário.'''
-},
+    },  
           {
             "role": "user",
             "content": prompt
           }
-        ],
+        ]
+
+    lista[1:1] = historic
+
+    client = Groq(api_key=API_KEY)
+    completion = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=lista,
         temperature=1,
-        max_completion_tokens=200,
+        max_completion_tokens=350,
         top_p=1,
         stream=False,
         stop=None
