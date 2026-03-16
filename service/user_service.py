@@ -101,7 +101,11 @@ def service_create_user(email:str, password:str, name:str, phone:str):
     service_create_new_wallet(str(new_uuid))
                     
 
-    return JSONResponse(status_code=201, content="usuário criado") 
+    token = create_access_token(str(new_uuid),name,"user")
+
+    return JSONResponse(status_code=201, 
+                content={"username":name,"role":"user","user_id": str(new_uuid), "phone":phone, "access_token":token, }
+) 
 
 
 
