@@ -13,6 +13,11 @@ def service_create_new_wallet(user_id):
 
     return
 
+def service_get_balance_wallet_by_user_id(user_id):
+
+    wallet = get_one_wallet_by_uuid(user_id)
+
+    return wallet[0]["balance"]
 
 
 
