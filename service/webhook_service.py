@@ -30,7 +30,3 @@ def receive_payment_from_webhook(data):
 
 
 
-
-
-
-

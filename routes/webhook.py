@@ -11,9 +11,10 @@ tags=["webhooks"]
 @router.post("/asaas")
 def webhook(data: dict):
 
-    response =  receive_payment_from_webhook(data)
+    receive_payment_from_webhook(data)
+    print("WEBHOOK:", data)
 
-    return response    
+    return {"status": "ok"}
 
 
 

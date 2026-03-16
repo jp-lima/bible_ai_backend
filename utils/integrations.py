@@ -1,10 +1,15 @@
 from dotenv import load_dotenv
 import requests
+import os
 
-asaas_api = "https://api-sandbox.asaas.com/v3/customers"
+load_dotenv()
 
+asaas_acess_token = os.getenv("API_KEY_ASAAS")
+asaas_base_url = os.getenv("BASE_URL_ASAAS")
+asaas_api = f'{asaas_base_url}/v3/customers'  
 
 def create_new_client(user_name:str, user_cpf:str):
+    print(asaas_api, "AQUI")
 
     payload = {
             "name":user_name,
@@ -14,12 +19,30 @@ def create_new_client(user_name:str, user_cpf:str):
     headers = {
         "accept":"application/json",
         "content-type": "application/json",
-    "access_token": "$aact_hmlg_000MzkwODA2MWY2OGM3MWRlMDU2NWM3MzJlNzZmNGZhZGY6OmE2MTllZGFkLTQ4YTktNDRiOS05NWJkLTQ5NTYxM2ZlOGJhMDo6JGFhY2hfZjc5N2RhNTUtMzIxMC00ZGRhLWJiYzUtOTk3YjJlZTE4OTNl"
+    "access_token":asaas_acess_token  
         }
 
     response = requests.post(asaas_api, headers=headers, json=payload)
 
     return response
+
+def get_checkout(subscription_id):
+
+    #url = "https://sandbox.asaas.com/api/v3/payments"
+    
+    url = f'{asaas_base_url}/v3/payments'
+
+    headers = {
+        "access_token": asaas_acess_token  
+    }
+
+    params = {
+        "subscription": subscription_id  
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+
+    return response.json()
 
 
 
