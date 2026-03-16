@@ -1,4 +1,5 @@
 from os import access, confstr, stat
+import re
 from fastapi.responses import JSONResponse
 from repositories.user_repo import del_user, get_all_users,get_user_by_email, post_new_user, get_user_by_id, put_user    
 from utils import access_token
@@ -84,6 +85,11 @@ def service_get_all_users(authorization:str):
         return "não autorizado"
 
 def service_create_user(email:str, password:str, name:str, phone:str):
+    user = get_user_by_email(email)
+
+    if user: 
+        return JSONResponse(status_code=429, content="Você já tem uma conta cadastrada com esse email")
+
     hashed_password = create_hash(password)
     new_uuid = uuid.uuid4()
 
@@ -102,6 +108,7 @@ def service_create_user(email:str, password:str, name:str, phone:str):
 def service_delete_user(uuid:str, authorization:str):
 
     decoded_token = decode_access_token(authorization)
+
 
     if decoded_token["role"] == "admin":
            
