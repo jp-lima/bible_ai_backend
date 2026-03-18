@@ -24,8 +24,8 @@ def service_create_subscription(user_id, plan_id, user_cpf, billing_type, user_n
     plan = get_plan_by_id(plan_id)
     plan_table = {
             "monthly":{"value":plan[0]["price_monthly"], "days_quantity":30},
-            "quartely":{"value":plan[0]["price_quartely"], "days_quantity":90},
-            "semiannualy":{"value":plan[0]["price_semiannual"], "days_quantity":180}
+            "quarterly":{"value":plan[0]["price_quartely"], "days_quantity":90},
+            "semiannually":{"value":plan[0]["price_semiannual"], "days_quantity":180}
                            
         }
 

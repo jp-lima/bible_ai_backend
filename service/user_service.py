@@ -10,6 +10,15 @@ import uuid
 from datetime import datetime
 from service.wallet_service import service_create_new_wallet
 
+class UserService:
+
+    def __init__(self, authorization):
+        decoded_token = decode_access_token(authorization)        
+
+        print(decoded_token["role"])
+
+
+
 
 
 def verify_password(email:str, password:str):
@@ -106,7 +115,6 @@ def service_create_user(email:str, password:str, name:str, phone:str):
     return JSONResponse(status_code=201, 
                 content={"username":name,"role":"user","user_id": str(new_uuid), "phone":phone, "access_token":token, }
 ) 
-
 
 
 def service_delete_user(uuid:str, authorization:str):
