@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
 from service.subscription_service import *
-from service.subscription_service import service_create_subscription     
 from models.model_subscription import *
+
 
 router = APIRouter(
 prefix="/subscription",
@@ -12,9 +12,9 @@ tags=["subscription"]
 
 @router.get("")
 def get_subscription():
+    subscriptions = get_all_subscriptions() 
 
-
-    return "Run subscription"
+    return subscriptions
 
 @router.post("")
 def create_new_subscription(request: Request_new_subscription):

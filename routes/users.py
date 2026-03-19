@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Form,File, UploadFile,Response, HTTPException
+from fastapi import APIRouter,Header 
 from repositories.user_repo import get_all_users,get_user_by_email
 from service.user_service import UserService, verify_password, service_create_user,service_delete_user,service_get_all_users,service_update_password_user,service_update_users_infos     
 
@@ -10,17 +10,24 @@ prefix="/users",
 tags=["users"]
         )
 
+
 @router.get("/teste")
 def teste():
-    obj = UserService("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmIwY2I1Yy01YjhkLTQ3NmUtODczYy0yNGY4OTE5YzRlYjQiLCJuYW1lIjoiR2FicmllbCBCYXJib3NhIiwicm9sZSI6InVzZXIifQ._Oyevii58AkYRMQgfmW34DLfrUC53v5HXJXfdGnCEJU")
+    return
 
 
 # admin receber todos os usuários
 @router.get("/")
-def get_users(request:RequestGetAuthorization):
+def get_users(Authorization: str = Header()):
+
+    obj = UserService(Authorization)    
+
+    
+    return obj.get_all_users()
+
     #all_users = service_get_all_users(request.authorization)
-    all_users = get_all_users()
-    return all_users
+    #all_users = get_all_users()
+    #return all_users
 
 
 @router.put("/")

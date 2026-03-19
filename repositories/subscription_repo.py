@@ -1,6 +1,25 @@
 from db import get_conn
 from models import user
 
+def get_all_subscriptions():
+    conn = get_conn()
+
+    cursor = conn.cursor(dictionary = True)
+
+    cursor.execute( '''
+       SELECT * FROM subscriptions''',
+ )
+    subscriptions = cursor.fetchall()
+
+
+    cursor.close()
+    conn.close()
+
+    return subscriptions
+
+
+
+
 
 def create_row_subscription(uuid:str, user_id:str, plan_id:str,status:str ,next_billing_date:str, payment_provider_id:str, created_at:str):
     conn = get_conn()

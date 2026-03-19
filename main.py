@@ -7,6 +7,7 @@ from service.user_service import verify_password, service_create_user, service_d
 from models.user import UserRequestLogin, UserCreateRequest, UserDeleteRequest    
 
 from fastapi.middleware.cors import CORSMiddleware
+from routes.plans import router as plans_router 
 from routes.users import router as users_router
 from routes.webhook import router as webhook_yampi
 from routes.analitycs import router as analitycs_router
@@ -22,8 +23,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.include_router(chat_router)
-app.include_router(subscription_router)
 app.include_router(users_router)
-app.include_router(analitycs_router)
+app.include_router(chat_router)
+app.include_router(plans_router)
+app.include_router(subscription_router)
 app.include_router(webhook_yampi)
+app.include_router(analitycs_router)

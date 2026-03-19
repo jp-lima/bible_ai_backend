@@ -10,7 +10,7 @@ load_dotenv()
 CHAVE_API_GOOGLE = os.getenv("GEMINI_API_KEY").strip()
 MODELO_ESCOLHIDO = "gemini-2.5-flash-lite"
 BASE_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODELO_ESCOLHIDO}:generateContent?key={CHAVE_API_GOOGLE}"
-print(f"🔑 CHAVE_API_GOOGLE: {CHAVE_API_GOOGLE}")
+
 def processar_mensagem_gemini(prompt, historico_bruto, religion, humor, need, modo):
     """Processa mensagem através do Gemini API"""
     

@@ -15,7 +15,15 @@ class UserService:
     def __init__(self, authorization):
         decoded_token = decode_access_token(authorization)        
 
-        print(decoded_token["role"])
+        self.isAdmin = (decoded_token["role"] == "admin") 
+
+    def get_all_users(self):
+
+        print(self.isAdmin)
+
+        all_users = get_all_users() 
+        
+        return all_users
 
 
 
