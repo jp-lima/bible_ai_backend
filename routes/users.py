@@ -1,6 +1,6 @@
 from fastapi import APIRouter,Header 
 from repositories.user_repo import get_all_users,get_user_by_email
-from service.user_service import UserService, verify_password, service_create_user,service_delete_user,service_get_all_users,service_update_password_user,service_update_users_infos     
+from service.user_service import verify_password, service_create_user,service_delete_user,service_get_all_users,service_update_password_user,service_update_users_infos     
 
 from models.user import UserRequestLogin, UserCreateRequest, UserDeleteRequest,RequestGetAuthorization,RequestNewPassword,RequestPutUser    
 
@@ -18,16 +18,11 @@ def teste():
 
 # admin receber todos os usuários
 @router.get("/")
-def get_users(Authorization: str = Header()):
+def get_users(Authorization : str = Header()):
 
-    obj = UserService(Authorization)    
-
-    
-    return obj.get_all_users()
-
-    #all_users = service_get_all_users(request.authorization)
-    #all_users = get_all_users()
-    #return all_users
+   all_users = service_get_all_users(Authorization)
+   #all_users = get_all_users()
+   return all_users
 
 
 @router.put("/")

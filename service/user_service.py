@@ -1,5 +1,6 @@
 from os import access, confstr, stat
 import re
+import pandas as pd
 from fastapi.responses import JSONResponse
 from repositories.user_repo import del_user, get_all_users,get_user_by_email, post_new_user, get_user_by_id, put_user    
 from utils import access_token
@@ -9,24 +10,30 @@ from service.analitycs_service import service_add_new_estatistic_on_analitycs, s
 import uuid
 from datetime import datetime
 from service.wallet_service import service_create_new_wallet
+from repositories.wallet_repo import get_all_wallets 
 
-class UserService:
+def service_get_all_users(authorization:str):
+# 1. Busca os dados brutos
+    users = get_all_users()
+    wallets = get_all_wallets()
 
-    def __init__(self, authorization):
-        decoded_token = decode_access_token(authorization)        
+    # 2. Cria um dicionário de mapeamento: {user_id: balance}
+    # Isso otimiza a busca para O(1)
+    wallet_map = {w['user_id']: w['balance'] for w in wallets}
 
-        self.isAdmin = (decoded_token["role"] == "admin") 
-
-    def get_all_users(self):
-
-        print(self.isAdmin)
-
-        all_users = get_all_users() 
+    # 3. Constrói a nova lista adicionando a coluna 'balance'
+    merged_list = []
+    for user in users:
+        # Copiamos o dicionário do usuário para não alterar o original
+        user_with_balance = user.copy()
         
-        return all_users
+        # Busca o saldo no mapa. Se não existir, define como 0
+        user_id = user.get('id')
+        user_with_balance['balance'] = wallet_map.get(user_id, 0)
+        
+        merged_list.append(user_with_balance)
 
-
-
+    return merged_list
 
 
 def verify_password(email:str, password:str):
@@ -88,18 +95,6 @@ def service_update_password_user(authorization:str, new_password:str):
             status_code=200,
             content= "senha alterada com sucesso"
             )
-
-def service_get_all_users(authorization:str):
-
-    access = decode_access_token(authorization)
-    
-    if(access["role"] == "admin"):
-
-        all_users = get_all_users()
-
-        return all_users
-    else:
-        return "não autorizado"
 
 def service_create_user(email:str, password:str, name:str, phone:str):
     user = get_user_by_email(email)

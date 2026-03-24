@@ -13,6 +13,20 @@ def get_one_wallet_by_uuid(uuid:str):
     return wallet   
 
 
+def get_all_wallets():
+    conn = get_conn()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM credit_wallet")
+    wallets = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return wallets
+
+
+
 
 def create_new_wallet(uuid:str, user_id:str, balance:int, cycle_started_at:str, cycle_finish_at:str, updated_at:str, created_at:str ):
     conn = get_conn()
