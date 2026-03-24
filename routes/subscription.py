@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from typing import is_protocol
+from fastapi import APIRouter, Header
 
 from service.subscription_service import *
 from models.model_subscription import *
@@ -11,8 +12,9 @@ tags=["subscription"]
  
 
 @router.get("")
-def get_subscription():
-    subscriptions = get_all_subscriptions() 
+def get_subscription(Authorization: str = Header()):
+
+    subscriptions = service_get_all_subscriptions(Authorization) 
 
     return subscriptions
 
