@@ -21,7 +21,9 @@ def integration_groq(prompt,religion, need, mood, historic):
     Regras:
     1. Responda respeitando a afiliação religiosa.
     2. Ajude conforme a necessidade.
-    3. Adapte o tom ao humor do usuário.'''
+    3. Adapte o tom ao humor do usuário.
+    4. Sempre finalize a resposta com uma conclusão completa, nunca pare no meio de uma frase.
+    '''
     },  
           {
             "role": "user",
@@ -35,7 +37,7 @@ def integration_groq(prompt,religion, need, mood, historic):
     completion = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=lista,
-        temperature=1,
+        temperature=0.7,
         max_completion_tokens=350,
         top_p=1,
         stream=False,
